@@ -1,0 +1,20 @@
+import webpush from 'web-push';
+
+webpush.setVapidDetails(
+  'mailto:you@example.com',
+  process.env.VAPID_PUBLIC_KEY,
+  process.env.VAPID_PRIVATE_KEY
+);
+
+export default async function handler(req, res) {
+  const subscription = req.body; // Normally you'd retrieve this from DB
+  const payload = JSON.stringify({ title: 'Hello!', body: 'This is a test push.' });
+
+  try {
+    await webpush.sendNotification(subscription, payload);
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to send notification' });
+  }
+}
