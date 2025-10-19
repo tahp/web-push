@@ -1,3 +1,4 @@
+import 'dotenv/config'; // or use require('dotenv').config() if using CommonJS
 import webpush from 'web-push';
 
 webpush.setVapidDetails(
