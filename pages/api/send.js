@@ -1,14 +1,13 @@
-import 'dotenv/config'; // or use require('dotenv').config() if using CommonJS
 import webpush from 'web-push';
 
 webpush.setVapidDetails(
   'mailto:you@example.com',
-  process.env.VAPID_PUBLIC_KEY,
+  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
 
 export default async function handler(req, res) {
-  const subscription = req.body; // Normally you'd retrieve this from DB
+  const subscription = req.body;
   const payload = JSON.stringify({ title: 'Hello!', body: 'This is a test push.' });
 
   try {
