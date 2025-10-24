@@ -1,24 +1,23 @@
 import { useState } from 'react';
 
 export default function Dashboard() {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [casino, setCasino] = useState('');
   const [status, setStatus] = useState('');
 
-  const sendNotification = async () => {
-    setStatus('Sending...');
+  const scheduleReminder = async () => {
+    setStatus('Scheduling...');
     try {
-      const res = await fetch('/api/send', {
+      const res = await fetch('/api/schedule-reminder', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, body }),
+        body: JSON.stringify({ casino }),
       });
 
       const result = await res.json();
       if (result.success) {
-        setStatus('✅ Notification sent!');
+        setStatus(`✅ Reminder scheduled for ${casino}`);
       } else {
-        setStatus('❌ Failed to send.');
+        setStatus('❌ Failed to schedule.');
       }
     } catch (err) {
       console.error(err);
@@ -28,21 +27,15 @@ export default function Dashboard() {
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>📣 Push Notification Dashboard</h1>
+      <h1>🎰 Casino Reminder Dashboard</h1>
       <input
         type="text"
-        placeholder="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
+        placeholder="Which casino?"
+        value={casino}
+        onChange={e => setCasino(e.target.value)}
         style={{ display: 'block', marginBottom: '1rem', width: '100%' }}
       />
-      <textarea
-        placeholder="Body"
-        value={body}
-        onChange={e => setBody(e.target.value)}
-        style={{ display: 'block', marginBottom: '1rem', width: '100%', height: '100px' }}
-      />
-      <button onClick={sendNotification}>Send Notification</button>
+      <button onClick={scheduleReminder}>Schedule Reminder</button>
       <p>{status}</p>
     </div>
   );
