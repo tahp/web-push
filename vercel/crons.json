@@ -1,0 +1,6 @@
+[
+  {
+    "path": "/api/check-reminders",
+    "schedule": "0 * * * *"
+  }
+]
