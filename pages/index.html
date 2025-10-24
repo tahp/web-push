@@ -34,8 +34,12 @@
           return;
         }
         
-        const registration = await navigator.serviceWorker.register('/sw.js');
-        await navigator.serviceWorker.ready;
+        const registration = await navigator.serviceWorker.register('/sw.js')
+  .catch(err => {
+    console.error('Service Worker registration failed:', err);
+    throw err;
+  });       
+ await navigator.serviceWorker.ready;
         
         subscription = await registration.pushManager.subscribe({
           userVisibleOnly: true,
