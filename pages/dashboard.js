@@ -15,8 +15,9 @@ export default function Dashboard() {
 
       const result = await res.json();
       if (result.success) {
-        setStatus(`✅ Reminder scheduled for ${casino}`);
-      } else {
+        const reminderTime = new Date(Date.now() + 24 * 60 * 60 * 1000).toLocaleString();
+setStatus(`✅ Reminder set for "${casino}". You’ll get a notification on ${reminderTime}.`);   
+   } else {
         setStatus('❌ Failed to schedule.');
       }
     } catch (err) {

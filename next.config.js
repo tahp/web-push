@@ -13,6 +13,14 @@ module.exports = {
       });
     }
 
+    config.watchOptions = {
+      ignored: [
+        path.resolve(__dirname, '/data/data'),
+        path.resolve(__dirname, '/data'),
+        path.resolve(__dirname, '/'),
+      ],
+    };
+
     return config;
   },
 

@@ -1,0 +1,11 @@
+// pages/api/test-redis.js or any script
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
+
+export default async function handler(req, res) {
+  await redis.set("foo", "bar");
+  const value = await redis.get("foo");
+
+  res.status(200).json({ success: true, value });
+}

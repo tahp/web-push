@@ -1,0 +1,17 @@
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
+
+export default async function handler(req, res) {
+  const { casino } = req.body;
+  if (!casino) return res.status(400).json({ success: false, error: 'Casino name required' });
+
+  const timestamp = Date.now() + 24 * 60 * 60 * 1000;
+  await redis.rpush('reminders', JSON.stringify({ casino, timestamp }));
+
+  res.status(200).json({ success: true });
+}
+x
+
