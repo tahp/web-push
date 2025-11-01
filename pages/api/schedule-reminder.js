@@ -2,12 +2,15 @@ import fs from 'fs';
 import path from 'path';
 
 export default async function handler(req, res) {
-  const { casino } = req.body;
+  const { casino, timestamp } = req.body;
   if (!casino) return res.status(400).json({ success: false, error: 'Casino name required' });
+
+  console.log('Received timestamp:', timestamp);
+  console.log('Server time:', Date.now());
 
   const reminder = {
     casino,
-    timestamp: Date.now() + 24 * 60 * 60 * 1000 // 24 hours from now
+    timestamp: timestamp || Date.now() + 24 * 60 * 60 * 1000 // Use provided timestamp or default to 24 hours
   };
 
   const filePath = path.resolve(process.cwd(), 'reminders.json');
